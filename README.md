@@ -9,7 +9,7 @@ Docker deployment for Agent Factory ([agent-factory](https://github.com/Ursa-Min
    cp .env.example .env
    ```
 
-2. Edit `.env` with your configuration (at minimum set `JWT_SECRET` and `ENCRYPTION_KEY`)
+2. Edit `.env` with your configuration (at minimum set `ADMIN_EMAIL` and `ADMIN_PASSWORD`)
 
 3. Run with local MongoDB:
    ```bash
