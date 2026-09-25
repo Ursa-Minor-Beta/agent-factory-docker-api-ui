@@ -1,6 +1,6 @@
 # Agent Factory Deploy
 
-Docker deployment for Agent Factory (API + UI).
+Docker deployment for Agent Factory ([agent-factory](https://github.com/Ursa-Minor-Beta/agent-factory) + [agent-factory-ui](https://github.com/Ursa-Minor-Beta/agent-factory-ui)).
 
 ## Quick Start
 
