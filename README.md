@@ -5,21 +5,21 @@ Docker deployment for Agent Factory ([agent-factory](https://github.com/Ursa-Min
 ## Quick Start
 
 1. Copy environment file:
-   ```bash
-   cp .env.example .env
-   ```
+```bash
+cp .env.example .env
+```
 
 2. Edit `.env` with your configuration (at minimum set `ADMIN_EMAIL` and `ADMIN_PASSWORD`)
 
 3. Run with local MongoDB:
-   ```bash
-   docker-compose --profile with-db up --build
-   ```
+```bash
+docker-compose --profile with-db up --build
+```
 
-   Or with external MongoDB (set `MONGODB_URI` in `.env`):
-   ```bash
-   docker-compose up --build
-   ```
+Or with external MongoDB (set `MONGODB_URI` in `.env`):
+```bash
+docker-compose up --build
+```
 
 4. Access:
    - UI: http://localhost:8080
@@ -27,17 +27,10 @@ Docker deployment for Agent Factory ([agent-factory](https://github.com/Ursa-Min
 ## Deploy Specific Version
 
 ```bash
-API_VERSION=v1.2.0 UI_VERSION=v1.0.0 docker-compose up --build
+API_VERSION=<branch/tag> UI_VERSION=<branch/tag> docker-compose up --build
 ```
 
 ## Update After Branch Changes
-
-To pull latest code and rebuild:
-```bash
-docker-compose --profile with-db up --build
-```
-
-For a complete fresh build (no cache):
 ```bash
 docker-compose --profile with-db build --no-cache && docker-compose --profile with-db up
 ```
