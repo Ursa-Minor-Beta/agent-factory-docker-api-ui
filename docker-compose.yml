@@ -18,6 +18,7 @@ services:
       - ADMIN_EMAIL=${ADMIN_EMAIL:-}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-}
       - ADMIN_NAME=${ADMIN_NAME:-Admin}
+      - AGENT_MAX_SNAPSHOTS=${AGENT_MAX_SNAPSHOTS:-50}
     depends_on:
       - mongo
     restart: unless-stopped
