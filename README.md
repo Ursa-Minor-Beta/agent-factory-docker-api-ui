@@ -44,6 +44,7 @@ docker-compose --profile with-db build --no-cache && docker-compose --profile wi
 | `API_PORT` | API exposed port | `3000` |
 | `UI_PORT` | UI exposed port | `8080` |
 | `MONGO_PORT` | MongoDB exposed port | `27017` |
+| `TRUST_PROXY` | Reverse proxy hops in front of the API (set `1` behind Caddy/Nginx to get real client IPs) | `0` |
 | `MONGO_USER` | MongoDB root username | - |
 | `MONGO_PASSWORD` | MongoDB root password | - |
 | `JWT_SECRET` | JWT signing secret | - |
