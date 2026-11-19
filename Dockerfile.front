@@ -1,18 +1,23 @@
-FROM node:24-alpine AS builder
+# syntax=docker/dockerfile:1
+FROM node:26-alpine AS src
 
 ARG UI_VERSION
+
+# Fetch the repository (re-fetched only when the ref points to a new commit)
+ADD https://github.com/Ursa-Minor-Beta/agent-factory-ui.git#${UI_VERSION} /src
+
+FROM node:26-alpine AS builder
+
 ARG VITE_API_URL
 ARG VITE_APP_NAME
 
-RUN apk add --no-cache git
-
-# Clone the repository
-RUN git clone --depth 1 --branch ${UI_VERSION} \
-      https://github.com/Ursa-Minor-Beta/agent-factory-ui.git /app
-
 WORKDIR /app
 
-RUN npm ci
+# Install dependencies (cached until package*.json changes)
+COPY --from=src /src/package*.json ./
+RUN --mount=type=cache,target=/root/.npm npm ci
+
+COPY --from=src /src ./
 
 ENV VITE_API_URL=$VITE_API_URL
 ENV VITE_APP_NAME=$VITE_APP_NAME
@@ -22,8 +27,8 @@ RUN npm run build
 # Production stage
 FROM nginx:alpine
 
-# Copy nginx config from the cloned repo
-COPY --from=builder /app/nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx config from the repo
+COPY --from=src /src/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy built assets
 COPY --from=builder /app/dist /usr/share/nginx/html

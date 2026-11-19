@@ -1,25 +1,29 @@
-FROM node:22-alpine AS builder
+# syntax=docker/dockerfile:1
+FROM node:26-alpine AS src
 
 ARG API_VERSION
 
-RUN apk add --no-cache git
+# Fetch the repository (re-fetched only when the ref points to a new commit)
+ADD https://github.com/Ursa-Minor-Beta/agent-factory.git#${API_VERSION} /src
 
-# Clone the repository
-RUN git clone --depth 1 --branch ${API_VERSION} \
-      https://github.com/Ursa-Minor-Beta/agent-factory.git /app
+FROM node:26-alpine AS builder
 
 WORKDIR /app
 
-RUN npm ci
+# Install dependencies (cached until package*.json changes)
+COPY --from=src /src/package*.json ./
+RUN --mount=type=cache,target=/root/.npm npm ci
+
+COPY --from=src /src ./
 RUN npm run build
 
 # Production stage
-FROM node:22-alpine AS runner
+FROM node:26-alpine AS runner
 
 WORKDIR /app
 
-COPY --from=builder /app/package*.json ./
-RUN npm ci --only=production
+COPY --from=src /src/package*.json ./
+RUN --mount=type=cache,target=/root/.npm npm ci --omit=dev
 
 COPY --from=builder /app/dist ./dist
 
