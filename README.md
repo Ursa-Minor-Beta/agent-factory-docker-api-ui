@@ -2,8 +2,6 @@
 
 Docker deployment for Agent Factory ([agent-factory](https://github.com/Ursa-Minor-Beta/agent-factory) + [agent-factory-ui](https://github.com/Ursa-Minor-Beta/agent-factory-ui)).
 
-> **⚠️ Note:** Agent Factory is actively being built. There could be breaking changes.
-
 ## Features
 
 **Building agents**
